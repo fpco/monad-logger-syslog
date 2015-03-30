@@ -12,10 +12,6 @@ build-type:          Simple
 extra-source-files:  README.md
 cabal-version:       >=1.10
 
-flag smoke
-  description: enable smoke-app executable
-  default:     False
-
 library
   default-language:    Haskell2010
   exposed-modules:     Control.Monad.Logger.Syslog
@@ -29,24 +25,3 @@ library
                      , monad-logger
                      , text
                      , transformers
-
-test-suite smoke
-  if flag(smoke)
-    buildable: True
-  else
-    buildable: False
-  default-language:    Haskell2010
-
-  type: exitcode-stdio-1.0
-  hs-source-dirs: test
-  main-is: smoke.hs
-
-  build-depends: base >=4.6 && <4.9
-               , bytestring
-               , fast-logger
-               , hsyslog
-               , monad-logger
-               , monad-logger-syslog
-               , shelly
-               , text
-               , transformers
