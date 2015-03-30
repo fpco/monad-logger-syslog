@@ -21,12 +21,13 @@ library
   exposed-modules:     System.Log.MonadLogger.Syslog
   ghc-options:        -Wall
   build-depends:       base >=4.6 && <4.9
-                     , monad-logger >= 0.3.4.0
-                     , fast-logger >= 2.1.0
-                     , hsyslog
-                     , transformers
-                     , text
                      , bytestring
+                     , fast-logger
+                     , hsyslog
+                     , hsyslog
+                     , monad-logger
+                     , text
+                     , transformers
 
 test-suite smoke
   if flag(smoke)
@@ -39,4 +40,12 @@ test-suite smoke
   hs-source-dirs: test
   main-is: smoke.hs
 
-  build-depends: base, monad-logger, monad-logger-syslog, shelly
+  build-depends: base >=4.6 && <4.9
+               , bytestring
+               , fast-logger
+               , hsyslog
+               , monad-logger
+               , monad-logger-syslog
+               , shelly
+               , text
+               , transformers
