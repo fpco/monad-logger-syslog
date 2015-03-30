@@ -21,7 +21,6 @@ library
                      , bytestring
                      , fast-logger
                      , hsyslog
-                     , hsyslog
                      , monad-logger
                      , text
                      , transformers
