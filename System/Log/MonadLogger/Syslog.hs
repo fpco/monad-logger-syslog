@@ -17,20 +17,24 @@ runSyslogLoggingT = (`runLoggingT` syslogOutput)
 {-
 runSyslogLoggingT :: MonadIO m => String -> LoggingT m a -> m a
 runSyslogLoggingT source action =
-  useSyslog source (runLoggingT action syslogOutput)
+  useSyslog source (runLoggingT action defaultSyslogOutput)
 -}
 
+syslogOutput :: Loc -> LogSource -> LogLevel -> LogStr -> IO ()
+syslogOutput = defaultSyslogOutput
 
-syslogOutput :: Loc
-              -> LogSource
-              -> LogLevel
-              -> LogStr
-              -> IO ()
-syslogOutput l s level msg =
-    syslog (levelToPriority level) $
-        BS8.unpack $ fromLogStr $
-            defaultLogStr l s level msg
+defaultSyslogOutput :: Loc -> LogSource -> LogLevel -> LogStr -> IO ()
+defaultSyslogOutput = formattedSyslogOutput defaultLogStr
 
+formattedSyslogOutput :: (Loc -> LogSource -> LogLevel -> LogStr -> LogStr)
+                      -> Loc
+                      -> LogSource
+                      -> LogLevel
+                      -> LogStr
+                      -> IO ()
+formattedSyslogOutput f l s level msg =
+  syslog (levelToPriority level)
+         (BS8.unpack (fromLogStr (f l s level msg)))
 
 levelToPriority :: LogLevel -> Priority
 levelToPriority LevelDebug = Debug
