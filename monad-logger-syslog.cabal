@@ -1,8 +1,8 @@
 name:                monad-logger-syslog
 version:             0.1.0.0
-synopsis:            rsyslog output for monad-logger
-description:         rsyslog output for monad-logger
-homepage:            https://github.com/docmunch/monad-logger-rsyslog
+synopsis:            syslog output for monad-logger
+description:         syslog output for monad-logger
+homepage:            https://github.com/docmunch/monad-logger-syslog
 license:             MIT
 license-file:        LICENSE
 author:              Greg Weber
