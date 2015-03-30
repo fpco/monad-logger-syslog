@@ -1,11 +1,18 @@
 {-# LANGUAGE OverloadedStrings #-}
-module System.Log.MonadLogger.Syslog where
+
+module System.Log.MonadLogger.Syslog
+       ( runSyslogLoggingT
+       , syslogOutput
+       , defaultSyslogOutput
+       , formattedSyslogOutput
+       )
+       where
 
 import Control.Monad.IO.Class (MonadIO ())
 import Control.Monad.Logger
 import System.Posix.Syslog
 import Data.Text (unpack)
-import System.Log.FastLogger (LogStr, fromLogStr)
+import System.Log.FastLogger (fromLogStr)
 import qualified Data.ByteString.Char8 as BS8
 
 runSyslogLoggingT :: MonadIO m => LoggingT m a -> m a
