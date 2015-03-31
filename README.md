@@ -1,7 +1,7 @@
 # Monad Logger for Syslog
 
-![img](//travis-ci.org/fpco/monad-logger-syslog.svg)
-![img](//img.shields.io/hackage/v/monad-logger-syslog.svg)
+![TravisCI](https://travis-ci.org/fpco/monad-logger-syslog.svg)
+![Hackage](https://img.shields.io/hackage/v/monad-logger-syslog.svg)
 
 ## Install
 
