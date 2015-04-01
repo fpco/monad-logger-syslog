@@ -1,7 +1,3 @@
-module Control.Monad.Logger.Syslog
-       ( module System.Log.MonadLogger.Syslog )
-       where
-
 {-|
 Module      : Control.Monad.Logger.Syslog
 Description : Functions for directing monad-logger output to syslog
@@ -20,5 +16,8 @@ main :: IO ()
 main = runSyslogLoggingT (logDebugN "HELLO!")
 ```
 |-}
+module Control.Monad.Logger.Syslog
+       ( module System.Log.MonadLogger.Syslog )
+       where
 
 import System.Log.MonadLogger.Syslog

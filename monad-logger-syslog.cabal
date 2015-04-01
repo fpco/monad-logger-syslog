@@ -1,5 +1,5 @@
 name:                monad-logger-syslog
-version:             0.1.1.0
+version:             0.1.1.1
 synopsis:            syslog output for monad-logger
 description:         syslog output for monad-logger
 homepage:            https://github.com/fpco/monad-logger-syslog
@@ -9,7 +9,7 @@ author:              Greg Weber & FP Complete Developers
 maintainer:          devs@fpcomplete.com
 category:            Logging
 build-type:          Simple
-extra-source-files:  README.md
+extra-source-files:  README.md ChangeLog.md
 cabal-version:       >=1.10
 
 source-repository head
