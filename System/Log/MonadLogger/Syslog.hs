@@ -22,9 +22,15 @@ import qualified Data.ByteString.Char8 as BS8
 runSyslogLoggingT :: MonadIO m => LoggingT m a -> m a
 runSyslogLoggingT = (`runLoggingT` syslogOutput)
 
--- TODO: useSyslog allows giving a source name and should be more efficient
--- But it assumes IO
--- Perhaps should use mmorph to generalize IO to MonadIO
+-- TODO: useSyslog allows giving a source name and should be more
+-- efficient But it assumes IO.  Perhaps MonadBaseControl should be
+-- used to generalize it.
+--
+-- Note that this probably shouldn't be the default implementation,
+-- because these settings are process-wide:
+-- https://hackage.haskell.org/package/hsyslog-2.0/docs/System-Posix-Syslog.html#v:withSyslog
+--
+-- So, concurrent use of this would step on eachother.
 {-
 runSyslogLoggingT :: MonadIO m => String -> LoggingT m a -> m a
 runSyslogLoggingT source action =
