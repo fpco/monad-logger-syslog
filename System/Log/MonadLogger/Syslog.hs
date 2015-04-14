@@ -15,6 +15,10 @@ import Data.Text (unpack)
 import System.Log.FastLogger (fromLogStr)
 import qualified Data.ByteString.Char8 as BS8
 
+-- | Runs a 'LoggingT', sending its output to the syslog.  The logs
+-- are formatted the same as 'runStdoutLoggingT', but the 'LogLevel'
+-- is converted to a syslog priority value (but still included in the
+-- log message).
 runSyslogLoggingT :: MonadIO m => LoggingT m a -> m a
 runSyslogLoggingT = (`runLoggingT` syslogOutput)
 
@@ -27,12 +31,18 @@ runSyslogLoggingT source action =
   useSyslog source (runLoggingT action defaultSyslogOutput)
 -}
 
+-- | Same as 'defaultSyslogOutput'.
 syslogOutput :: Loc -> LogSource -> LogLevel -> LogStr -> IO ()
 syslogOutput = defaultSyslogOutput
 
+-- | This invokes 'formattedSyslogOutput' with 'defaultLogStr'.  This
+-- means that the resulting log messages are the same as the default
+-- format used by "Control.Monad.Logger".
 defaultSyslogOutput :: Loc -> LogSource -> LogLevel -> LogStr -> IO ()
 defaultSyslogOutput = formattedSyslogOutput defaultLogStr
 
+-- | Given a "Control.Monad.Logger" log formatter, this writes the log
+-- to the syslog,
 formattedSyslogOutput :: (Loc -> LogSource -> LogLevel -> LogStr -> LogStr)
                       -> Loc
                       -> LogSource
