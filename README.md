@@ -9,8 +9,11 @@
 
 ## Usage (example)
 
-    import Control.Monad.Logger ( logDebugN  )
-    import Control.Monad.Logger.Syslog ( runSyslogLoggingT )
+    import Control.Monad.Logger (logDebugN)
+    import Control.Monad.Logger.Syslog (runSyslogLoggingT)
+    import System.Posix.Syslog (withSyslog, defaultConfig)
 
     main :: IO ()
-    main = runSyslogLoggingT (logDebugN "HELLO!")
+    main =
+        withSyslog defaultConfig $ \syslog ->
+          runSyslogLoggingT syslog (logDebugN "HELLO!")
