@@ -1,6 +1,12 @@
 flags:
   monad-logger-syslog: {}
+
 packages:
+- location:
+    git: git@github.com:Thoughtleadr/hsyslog
+    commit: 335eaabf3eb913badf9b02c7db72f3ce9513e655
 - '.'
+
 extra-deps: []
+
 resolver: lts-2.12
