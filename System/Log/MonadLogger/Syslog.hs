@@ -13,7 +13,6 @@ import Control.Monad.Logger
 import System.Posix.Syslog
 import Data.Text (unpack)
 import System.Log.FastLogger (fromLogStr)
-import qualified Data.ByteString.Char8 as BS8
 
 runSyslogLoggingT :: MonadIO m => LoggingT m a -> m a
 runSyslogLoggingT = (`runLoggingT` syslogOutput)
@@ -40,8 +39,10 @@ formattedSyslogOutput :: (Loc -> LogSource -> LogLevel -> LogStr -> LogStr)
                       -> LogStr
                       -> IO ()
 formattedSyslogOutput f l s level msg =
-  syslog (levelToPriority level)
-         (BS8.unpack (fromLogStr (f l s level msg)))
+  withSyslog defaultConfig $ \ syslog ->
+      syslog USER
+             (levelToPriority level)
+             (fromLogStr (f l s level msg))
 
 levelToPriority :: LogLevel -> Priority
 levelToPriority LevelDebug = Debug

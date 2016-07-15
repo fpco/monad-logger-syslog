@@ -1,5 +1,5 @@
 name:                monad-logger-syslog
-version:             0.1.1.1
+version:             0.1.2.0
 synopsis:            syslog output for monad-logger
 description:         syslog output for monad-logger
 homepage:            https://github.com/fpco/monad-logger-syslog
@@ -24,7 +24,7 @@ library
   build-depends:       base >=4.6 && <5
                      , bytestring
                      , fast-logger
-                     , hsyslog
+                     , hsyslog >=4
                      , monad-logger
                      , text
                      , transformers
