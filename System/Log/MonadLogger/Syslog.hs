@@ -9,7 +9,6 @@ module System.Log.MonadLogger.Syslog
        )
        where
 
-import Control.Monad.IO.Class (MonadIO ())
 import Control.Monad.Logger
 import System.Posix.Syslog
 import Data.Text (unpack)
@@ -19,7 +18,7 @@ import System.Log.FastLogger (fromLogStr)
 import qualified Data.ByteString.Char8 as BS8
 #endif
 
-runSyslogLoggingT :: MonadIO m => LoggingT m a -> m a
+runSyslogLoggingT :: LoggingT m a -> m a
 runSyslogLoggingT = (`runLoggingT` syslogOutput)
 
 -- TODO: useSyslog allows giving a source name and should be more efficient
