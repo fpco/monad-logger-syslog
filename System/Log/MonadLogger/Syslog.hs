@@ -18,24 +18,40 @@ import System.Log.FastLogger (fromLogStr)
 import qualified Data.ByteString.Char8 as BS8
 #endif
 
+-- | Runs a 'LoggingT', sending its output to the syslog.  The logs
+-- are formatted the same as 'runStdoutLoggingT', but the 'LogLevel'
+-- is converted to a syslog priority value (but still included in the
+-- log message).
 runSyslogLoggingT :: LoggingT m a -> m a
 runSyslogLoggingT = (`runLoggingT` syslogOutput)
 
--- TODO: useSyslog allows giving a source name and should be more efficient
--- But it assumes IO
--- Perhaps should use mmorph to generalize IO to MonadIO
+-- TODO: useSyslog allows giving a source name and should be more
+-- efficient But it assumes IO.  Perhaps MonadBaseControl should be
+-- used to generalize it.
+--
+-- Note that this probably shouldn't be the default implementation,
+-- because these settings are process-wide:
+-- https://hackage.haskell.org/package/hsyslog-2.0/docs/System-Posix-Syslog.html#v:withSyslog
+--
+-- So, concurrent use of this would step on eachother.
 {-
 runSyslogLoggingT :: MonadIO m => String -> LoggingT m a -> m a
 runSyslogLoggingT source action =
   useSyslog source (runLoggingT action defaultSyslogOutput)
 -}
 
+-- | Same as 'defaultSyslogOutput'.
 syslogOutput :: Loc -> LogSource -> LogLevel -> LogStr -> IO ()
 syslogOutput = defaultSyslogOutput
 
+-- | This invokes 'formattedSyslogOutput' with 'defaultLogStr'.  This
+-- means that the resulting log messages are the same as the default
+-- format used by "Control.Monad.Logger".
 defaultSyslogOutput :: Loc -> LogSource -> LogLevel -> LogStr -> IO ()
 defaultSyslogOutput = formattedSyslogOutput defaultLogStr
 
+-- | Given a "Control.Monad.Logger" log formatter, this writes the log
+-- to the syslog,
 formattedSyslogOutput :: (Loc -> LogSource -> LogLevel -> LogStr -> LogStr)
                       -> Loc
                       -> LogSource
