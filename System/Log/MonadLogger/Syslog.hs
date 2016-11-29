@@ -60,7 +60,7 @@ formattedSyslogOutput :: (Loc -> LogSource -> LogLevel -> LogStr -> LogStr)
                       -> IO ()
 formattedSyslogOutput f l s level msg =
 #if MIN_VERSION_hsyslog(4,0,0)
-    withSyslog undefined $ \syslog ->
+    withSyslog defaultConfig $ \syslog ->
         syslog USER
             (levelToPriority level)
             (fromLogStr $ f l s level msg)
