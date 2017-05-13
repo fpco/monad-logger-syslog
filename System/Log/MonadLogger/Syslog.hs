@@ -13,7 +13,9 @@ import Control.Monad.Logger
 import System.Posix.Syslog
 import Data.Text (unpack)
 import System.Log.FastLogger (fromLogStr)
-#if MIN_VERSION_hsyslog(4,0,0)
+#if MIN_VERSION_hsyslog(5,0,0)
+import qualified Data.ByteString.Unsafe as BSU
+#elif MIN_VERSION_hsyslog(4,0,0)
 #else
 import qualified Data.ByteString.Char8 as BS8
 #endif
@@ -59,7 +61,13 @@ formattedSyslogOutput :: (Loc -> LogSource -> LogLevel -> LogStr -> LogStr)
                       -> LogStr
                       -> IO ()
 formattedSyslogOutput f l s level msg =
-#if MIN_VERSION_hsyslog(4,0,0)
+#if MIN_VERSION_hsyslog(5,0,0)
+    withSyslog "hsyslog" [DelayedOpen] User $
+    BSU.unsafeUseAsCStringLen (fromLogStr $ f l s level msg) $
+    syslog
+      (Just User)
+      (levelToPriority level)
+#elif MIN_VERSION_hsyslog(4,0,0)
     withSyslog defaultConfig $ \syslog ->
         syslog USER
             (levelToPriority level)
