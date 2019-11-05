@@ -9,10 +9,22 @@
 
 ## Usage (example)
 
+### Default to syslog `user` facility with name `hslogger`
+
 ```haskell
 import Control.Monad.Logger ( logDebugN  )
 import Control.Monad.Logger.Syslog ( runSyslogLoggingT )
 
 main :: IO ()
 main = runSyslogLoggingT (logDebugN "HELLO!")
+```
+
+### Log under `Local1` facility with name `mylogger`
+
+```haskell
+import Control.Monad.Logger ( logDebugN  )
+import Control.Monad.Logger.Syslog ( runCustomSyslogLoggingT )
+
+main :: IO ()
+main = runCustomSyslogLoggingT "mylogger" Local1 (logDebugN "HELLO!")
 ```
