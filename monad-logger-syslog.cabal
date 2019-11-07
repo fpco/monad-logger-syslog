@@ -6,7 +6,7 @@ homepage:            https://github.com/fpco/monad-logger-syslog
 license:             MIT
 license-file:        LICENSE
 author:              Greg Weber & FP Complete Developers
-maintainer:          devs@fpcomplete.com
+maintainer:          Ernesto Hernández-Novich <haskell@iamemhn.link>
 category:            Logging
 build-type:          Simple
 extra-source-files:  README.md ChangeLog.md
