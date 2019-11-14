@@ -69,17 +69,13 @@ formattedSyslogOutput name facility f l s level msg =
     syslog
       (Just facility)
       (levelToPriority level)
-#elif MIN_VERSION_hsyslog(4,0,0)
+#else
     withSyslog defaultConfig { identifier      = BS8.pack name
                              , defaultFacility = facility
                              } $ \syslog ->
         syslog facility
             (levelToPriority level)
             (fromLogStr $ f l s level msg)
-#else
-    syslog
-        (levelToPriority level)
-        (BS8.unpack $ fromLogStr $ f l s level msg)
 #endif
 
 levelToPriority :: LogLevel -> Priority
