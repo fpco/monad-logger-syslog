@@ -1,5 +1,5 @@
 name:                monad-logger-syslog
-version:             0.1.5.0
+version:             0.1.6.0
 synopsis:            syslog output for monad-logger
 description:         syslog output for monad-logger
 homepage:            https://github.com/fpco/monad-logger-syslog
