@@ -10,13 +10,13 @@ module System.Log.MonadLogger.Syslog
 
 import Control.Monad.Logger
 import Data.Text             ( unpack )
-import System.Log.FastLogger ( fromLogStr )
 import System.Posix.Syslog
 
 #if MIN_VERSION_hsyslog(5,0,0)
 import qualified Data.ByteString.Unsafe as BSU
 #else
 import qualified Data.ByteString.Char8 as BS8
+import           System.Log.FastLogger ( fromLogStr )
 #endif
 
 -- | Runs a 'LoggingT' action, sending its output to Syslog.
