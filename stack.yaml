@@ -3,8 +3,11 @@ flags:
 packages:
 - '.'
 extra-deps: []
-# Supports GHC 8 only
-resolver: lts-14.15
+
+resolver: lts-23.9
+# resolver: lts-22.43
+# resolver: lts-16.26
+# resolver: lts-14.15
 # resolver: lts-13.19
 # resolver: lts-12.26
 # resolver: lts-11.22
